@@ -1,0 +1,20 @@
+<div class="container mt-4">
+  <h1 class="mb-4">New Comment</h1>
+  <% if user_signed_in? %>
+    <%= form_with(model: [@commentable, @comment], local: true, class: "needs-validation") do |form| %>
+      <div class="mb-3">
+        <%= form.label :content, class: "form-label" %>
+        <%= form.text_area :content, class: "form-control", rows: 5, required: true %>
+      </div>
+
+      <!-- Hidden fields for polymorphic association -->
+      <%= form.hidden_field :commentable_type, value: @commentable.class.name %>
+      <%= form.hidden_field :commentable_id, value: @commentable.id %>
+
+      <div class="mb-3">
+        <%= form.submit "Create Comment", class: "btn btn-primary" %>
+        <%= link_to "Back", blogs_path, class: "btn btn-secondary ms-2" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,16 @@
+<div class="container mt-4">
+  <h1 class="mb-4">New Tweet</h1>
+  <% if user_signed_in? %>
+    <%= form_with(model: @tweet, local: true, class: "needs-validation") do |form| %>
+      <div class="mb-3">
+        <%= form.label :content, class: "form-label" %>
+        <%= form.text_area :content, class: "form-control", rows: 5, required: true %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.submit "Create Tweet", class: "btn btn-primary" %>
+        <%= link_to "Back", tweets_path, class: "btn btn-secondary ms-2" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,28 @@
+<div class="container mt-4">
+  <div class="card mb-4">
+    <div class="card-body">
+      <h1 class="card-title h4"><%= @tweet.content %></h1>
+      <h3 class="card-subtitle mb-2 text-muted"><%= @tweet.created_at.strftime("%B %d, %Y %H:%M") %></h3>
+    </div>
+  </div>
+
+  <h2 class="mb-3">Comments</h2>
+  <div class="mb-4">
+    <% @comments.each do |comment| %>
+      <div class="card mb-2">
+        <div class="card-body">
+          <p class="card-text"><%= comment.content %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if user_signed_in? && @tweet.user==current_user %>
+    <div class="mb-3">
+      <%= link_to "Edit", edit_tweet_path(@tweet), class: "btn btn-warning me-2 mb-3" %>
+      <%= button_to "Delete", tweet_path(@tweet), method: :delete, class: "btn btn-danger", data: { turbo_confirm: "Are you sure?" } %>
+    </div>
+  <% end %>
+
+  <%= link_to "Back", tweets_path, class: "btn btn-secondary" %>
+</div>

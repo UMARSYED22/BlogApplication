@@ -1,0 +1,16 @@
+<div class="container mt-4">
+  <h1 class="mb-4">Comments</h1>
+  <div class="row">
+    <% @comments.each do |comment| %>
+      <div class="col-md-6 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title h5"><%= comment.content %></h2>
+            <p class="card-text"><strong>Type:</strong> <%= comment.commentable_type %></p>
+            <p class="card-text"><strong>ID:</strong> <%= comment.commentable_id %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
