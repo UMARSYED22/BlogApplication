@@ -1,16 +1,16 @@
 class BlogsController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
   before_action :set_blog, only: [ :show, :edit, :update, :destroy, :publish ]
-  before_action :authorize_user, only: [ :edit, :update, :destroy, :publish ]
+  access all: [ :show, :index ], user: { except: [ :delete ] }, admin: :all
 
-  access all: [ :show, :index ], user: { except: [ :destroy, :new, :create, :update, :edit, :publish ] }, admin: :all
+
 
   def index
     @blogs = Blog.where(status: :published)
   end
 
   def show
-    @comments = @blog.comments
+    @comments = @blog.comments.order(id: :desc)
   end
 
   def new
@@ -59,7 +59,7 @@ class BlogsController < ApplicationController
   private
 
   def blog_params
-    params.require(:blog).permit(:title, :body)
+    params.require(:blog).permit(:title, :body, category_ids: [])
   end
 
   def set_blog

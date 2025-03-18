@@ -11,12 +11,25 @@
         </div>
       </div>
     <% end %>
-
-    <% if user_signed_in? %>
-      <!-- Use the nested route helper to include the blog_id -->
-      <p><%= link_to "Add Comment", new_blog_comment_path(@blog), class: "btn btn-primary" %></p>
-    <% end %>
   </div>
+
+  <% if user_signed_in? %>
+    <h2 class="mb-3">Add a Comment</h2>
+    <%= form_with(model: [@blog, Comment.new], local: true, class: "needs-validation") do |form| %>
+      <div class="mb-3">
+        <%= form.label :content, class: "form-label" %>
+        <%= form.text_area :content, class: "form-control", rows: 5, required: true %>
+      </div>
+
+      <!-- Hidden fields for polymorphic association -->
+      <%= form.hidden_field :commentable_type, value: @blog.class.name %>
+      <%= form.hidden_field :commentable_id, value: @blog.id %>
+
+      <div class="mb-3">
+        <%= form.submit "Create Comment", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  <% end %>
 
   <% if user_signed_in? && (@blog.user == current_user || current_user.has_role?(:admin)) %>
     <div class="mb-3">

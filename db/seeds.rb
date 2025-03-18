@@ -29,3 +29,11 @@ comments = Comment.create([
   { content: 'Nice tweet!', commentable: tweets.first },
   { content: 'Interesting perspective.', commentable: tweets.second }
 ])
+
+categories = [
+  { name: 'Sports' },
+  { name: 'Health' },
+  { name: 'Technology' },
+  { name: 'Education' },
+  { name: 'Entertainment' }
+]

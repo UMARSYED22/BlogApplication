@@ -38,7 +38,7 @@ class CommentsController < ApplicationController
   end
   private
   def set_commentable
-    @commentable = Blog.friendly.find(params[:blog_id])
+    @commentable = Blog.find_by(slug: params[:blog_id]) || Blog.find(params[:blog_id])
   end
   def comment_params
     params.require(:comment).permit(:content, :commentable_type, :commentable_id)

@@ -6,4 +6,5 @@ class Blog < ApplicationRecord
   validates :title, presence: true
   validates :body, presence: true
   enum status: { draft: 0, published: 1 }
+  has_and_belongs_to_many :categories
 end

@@ -10,6 +10,10 @@
     <%= form.label :body, class: "form-label" %>
     <%= form.text_area :body, class: "form-control", rows: 5, required: true %>
   </div>
+ <div class="field">
+  <%= form.label :category_ids, "Categories" %>
+  <%= form.collection_select :category_ids, Category.all, :id, :name, { prompt: "Select Categories" }, { multiple: true } %>
+</div>
 
   <div class="mb-3">
     <%= form.submit "Create Blog", class: "btn btn-primary" %>
