@@ -6,7 +6,10 @@
         <%= form.label :content, class: "form-label" %>
         <%= form.text_area :content, class: "form-control", rows: 5, required: true %>
       </div>
-
+      <div class="field">
+        <%= form.label :category_id, "Categories" %>
+        <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Select Categories" }, { multiple: false } %>
+    </div>
       <div class="mb-3">
         <%= form.submit "Create Tweet", class: "btn btn-primary" %>
         <%= link_to "Back", tweets_path, class: "btn btn-secondary ms-2" %>

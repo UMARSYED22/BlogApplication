@@ -9,10 +9,12 @@
         <div class="card h-100 shadow-sm">
           <div class="row g-0">
             <div class="col p-4 d-flex flex-column position-static">
-              <strong class="d-inline-block mb-2 text-primary">World</strong>
-              <h3 class="mb-0"><%= tweet.user.email %></h3>
+              <strong class="d-inline-block mb-2 text-primary"><%=tweet.category.name%></strong>
+              
+               <h3 class="mb-0"><%= tweet.content %></h3>
               <div class="mb-1 text-muted"><%= time_ago_in_words(tweet.created_at) %> ago</div>
-              <p class="card-text mb-auto"><%= tweet.content %></p>
+             
+               <p class="card-text mb-auto"><%=tweet.user.email %></p>
               <%= link_to "#{tweet.comments.count} comments", tweet_path(tweet), class: "stretched-link" %>
             </div>
            

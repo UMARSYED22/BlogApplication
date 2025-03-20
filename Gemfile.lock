@@ -110,6 +110,8 @@ GEM
       warden (~> 1.2.3)
     drb (2.2.1)
     erubi (1.13.1)
+    faker (3.5.1)
+      i18n (>= 1.8.11, < 2)
     friendly_id (5.5.1)
       activerecord (>= 4.0.0)
     globalid (1.2.1)
@@ -340,6 +342,7 @@ DEPENDENCIES
   capybara
   debug
   devise
+  faker
   friendly_id (~> 5.5.0)
   importmap-rails
   jbuilder

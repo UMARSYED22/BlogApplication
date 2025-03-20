@@ -12,7 +12,7 @@
   <% @blogs.each do |blog| %>
     <article class="blog-post mb-4">
       <h2 class="blog-post-title"><%=  blog.title %></h2>
-      <p class="blog-post-meta"><%= time_ago_in_words(blog.created_at) %> ago by <%= blog.user.email%></p>
+      <p class="blog-post-meta"><%= time_ago_in_words(blog.created_at) %> ago by <%=blog.user.email%></p>
 
       <p><%= blog.body.html_safe %></p>
       
