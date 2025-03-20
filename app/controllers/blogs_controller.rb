@@ -9,9 +9,9 @@ class BlogsController < ApplicationController
     @categories = Category.all
     if params[:category_id]
       @category = Category.where(id: params[:category_id]).includes(:blogs)
-      @blogs = @category.first.blogs.where(status: :published)
+      @blogs = @category.first.blogs.where(status: :published).page(params[:page]).per(10)
     else
-      @blogs = Blog.where(status: :published)
+      @blogs = Blog.where(status: :published).page(params[:page]).per(10)
     end
   end
 

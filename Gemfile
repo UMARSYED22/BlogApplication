@@ -58,3 +58,4 @@ end
 gem "devise"
 gem "friendly_id", "~> 5.5.0"
 gem "petergate"
+gem "kaminari"

@@ -6,11 +6,16 @@
   <div class="row">
     <% @tweets.each do |tweet| %>
       <div class="col-md-6 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h2 class="card-title h5">
-              <%= link_to tweet.content, tweet_path(tweet), class: "text-decoration-none" %>
-            </h2>
+        <div class="card h-100 shadow-sm">
+          <div class="row g-0">
+            <div class="col p-4 d-flex flex-column position-static">
+              <strong class="d-inline-block mb-2 text-primary">World</strong>
+              <h3 class="mb-0"><%= tweet.user.email %></h3>
+              <div class="mb-1 text-muted"><%= time_ago_in_words(tweet.created_at) %> ago</div>
+              <p class="card-text mb-auto"><%= tweet.content %></p>
+              <%= link_to "#{tweet.comments.count} comments", tweet_path(tweet), class: "stretched-link" %>
+            </div>
+           
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 <div class="container mt-4">
   <h1 class="mb-3"><%= @blog.title %></h1>
-  <h3 class="mb-4"><%= @blog.body %></h3>
+  <div class="mb-4"><%= @blog.body.html_safe %></div>
   <%ids=@blog.id%>
   <%name=@blog.class.name%>
   
@@ -28,8 +28,7 @@
         <%= form.text_area :content, class: "form-control", rows: 5, required: true %>
       </div>
     
-  <%=ids%>
-  <%=name%>
+  
       <!-- Hidden fields for polymorphic association -->
       <%= form.hidden_field :commentable_type, value: name %>
       <%= form.hidden_field :commentable_id, value: ids %>
