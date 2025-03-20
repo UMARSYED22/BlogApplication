@@ -12,10 +12,30 @@
       <div class="card mb-2">
         <div class="card-body">
           <p class="card-text"><%= comment.content %></p>
+          <%if (user_signed_in? && comment.user==current_user) || user_signed_in? && @tweet.user==current_user %>
+          <%=button_to "delete",comment_path(comment.id) ,method: :delete,data: { turbo_confirm: "Are you sure?" } %>
+          <%end%>
         </div>
       </div>
     <% end %>
   </div>
+   <% if user_signed_in? %>
+    <h2 class="mb-3">Add a Comment</h2>
+    <%= form_with(model: [@tweet, Comment.new], local: true, class: "needs-validation") do |form| %>
+      <div class="mb-3">
+        <%= form.label :content, class: "form-label" %>
+        <%= form.text_area :content, class: "form-control", rows: 5, required: true %>
+      </div>
+
+      <!-- Hidden fields for polymorphic association -->
+      <%= form.hidden_field :commentable_type, value: @tweet.class.name %>
+      <%= form.hidden_field :commentable_id, value: @tweet.id %>
+
+      <div class="mb-3">
+        <%= form.submit "Create Comment", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  <% end %>
 
   <% if user_signed_in? && @tweet.user==current_user %>
     <div class="mb-3">

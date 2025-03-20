@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :comments
-  resources :tweets
+  resources :tweets do
+    resources :comments, only: [ :create ]
+  end
   resources :blogs do
-    resources :comments, only: [ :new, :create, :index, :show ]
+    resources :comments
   end
   get "my_blogs", to: "blogs#my_blogs", as: :user_blogs
   patch "blogs/:id/publish", to: "blogs#publish", as: :publish_blog

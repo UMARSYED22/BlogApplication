@@ -1,6 +1,16 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-auto">
+      <%=link_to "All" ,blogs_path,class: "btn btn-primary"%>
+      <% Category.all.each do |category| %>
+        <%= link_to category.name, blogs_path(category_id: category.id), class: "btn btn-primary m-2" %>
+      <% end %>
+    </div>
+  </div>
+</div>
 <div class="container-fluid" style="height: 100vh; overflow-y: auto;">
   <% @blogs.each do |blog| %>
-    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 50vh;">
       <div class="card mb-3" style="width: 50rem; height: 80vh;">
         <div class="card-body d-flex flex-column">
           <h5 class="card-title"><%= link_to blog.title, blog_path(blog.id), class: "text-decoration-none" %></h5>

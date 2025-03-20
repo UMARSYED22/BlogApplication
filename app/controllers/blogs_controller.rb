@@ -6,7 +6,13 @@ class BlogsController < ApplicationController
 
 
   def index
-    @blogs = Blog.where(status: :published)
+    @categories = Category.all
+    if params[:category_id]
+      @category = Category.where(id: params[:category_id]).includes(:blogs)
+      @blogs = @category.first.blogs.where(status: :published)
+    else
+      @blogs = Blog.where(status: :published)
+    end
   end
 
   def show
