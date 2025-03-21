@@ -1,8 +1,27 @@
+<% if user_signed_in? %>
+  <%#byebug%>
+    <h2 class="mb-3">Add a Comment</h2>
+    <%= form_with(model: [@blog, Comment.new], local: true, class: "needs-validation") do |form| %>
+      <div class="mb-3">
+        <%= form.label :content, class: "form-label" %>
+        <%= form.text_area :content, class: "form-control", rows: 5, required: true %>
+      </div>
+    
+  
+      <!-- Hidden fields for polymorphic association -->
+      <%= form.hidden_field :commentable_type, value: @blog.id %>
+      <%= form.hidden_field :commentable_id, value: @blog.class.name %>
+
+      <div class="mb-3">
+        
+        <%= form.submit "Create Comment", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  <% end %>
 <div class="container mt-4">
   <h1 class="mb-3"><%= @blog.title %></h1>
   <div class="mb-4"><%= @blog.body.html_safe %></div>
-  <%ids=@blog.id%>
-  <%name=@blog.class.name%>
+
   
   <h2 class="mb-3">Comments</h2>
   <div class="mb-4">
@@ -20,26 +39,7 @@
     <% end %>
   </div>
 
-  <% if user_signed_in? %>
-  <%#byebug%>
-    <h2 class="mb-3">Add a Comment</h2>
-    <%= form_with(model: [@blog, Comment.new], local: true, class: "needs-validation") do |form| %>
-      <div class="mb-3">
-        <%= form.label :content, class: "form-label" %>
-        <%= form.text_area :content, class: "form-control", rows: 5, required: true %>
-      </div>
-    
   
-      <!-- Hidden fields for polymorphic association -->
-      <%= form.hidden_field :commentable_type, value: name %>
-      <%= form.hidden_field :commentable_id, value: ids %>
-
-      <div class="mb-3">
-        
-        <%= form.submit "Create Comment", class: "btn btn-primary" %>
-      </div>
-    <% end %>
-  <% end %>
 
   <% if user_signed_in? && (@blog.user == current_user || current_user.has_role?(:admin)) %>
     <div class="mb-3">

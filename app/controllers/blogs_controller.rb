@@ -1,6 +1,6 @@
 class BlogsController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
-  before_action :set_blog, only: [ :show, :edit, :update, :destroy, :publish ]
+  before_action :set_blog, only: [ :show, :edit, :update, :destroy, :publish, :unpublish ]
   access all: [ :show, :index ], user: { except: [ :delete ] }, admin: :all
 
 
@@ -41,6 +41,15 @@ class BlogsController < ApplicationController
       redirect_to @blog, alert: "Blog is already published."
     end
   end
+
+  def unpublish
+    if @blog.published?
+      @blog.draft!
+      redirect_to @blog, notice: "Blog was successfully unpublished."
+    else
+        redirect_to @blog, alert: "Blog is already unpublished."
+    end
+end
 
   def edit
   end
