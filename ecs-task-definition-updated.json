@@ -1,0 +1,62 @@
+{
+  "family": "blog-application",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::950538587049:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::950538587049:role/ecsTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "blog-app",
+      "image": "950538587049.dkr.ecr.us-east-1.amazonaws.com/blog-application:latest",
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "environment": [
+        {
+          "name": "RAILS_ENV",
+          "value": "production"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "RAILS_MASTER_KEY",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:950538587049:secret:blog-app/rails-master-key-QOgGjS"
+        },
+        {
+          "name": "DATABASE_URL",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:950538587049:secret:blog-app/database-url-OyslOD"
+        },
+        {
+          "name": "SECRET_KEY_BASE",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:950538587049:secret:blog-app/secret-key-base-VCpEJ1"
+        },
+        {
+          "name": "GMAIL_USERNAME",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:950538587049:secret:blog-app/gmail-username-6EA4NU"
+        },
+        {
+          "name": "GMAIL_PASSWORD",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:950538587049:secret:blog-app/gmail-password-0MJx09"
+        },
+        {
+          "name": "DOMAIN_NAME",
+          "valueFrom": "arn:aws:secretsmanager:us-east-1:950538587049:secret:blog-app/domain-name-jXxR0z"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/blog-application",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
