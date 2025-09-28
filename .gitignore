@@ -33,3 +33,8 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+# Deployment scripts and sensitive files - keep local only
+deploy-aws.sh
+ecs-task-definition.json
+fix-signup-redirect.md
+setup.sh

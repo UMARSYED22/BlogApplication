@@ -1,9 +1,7 @@
 class BlogsController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
   before_action :set_blog, only: [ :show, :edit, :update, :destroy, :publish, :unpublish ]
-  access all: [ :show, :index ], user: { except: [ :delete ] }, admin: :all
-
-
+  before_action :authorize_user, only: [ :edit, :update, :destroy, :publish, :unpublish ]
 
   def index
     @categories = Category.all
@@ -33,24 +31,6 @@ class BlogsController < ApplicationController
     end
   end
 
-  def publish
-    if @blog.draft?
-      @blog.published!
-      redirect_to @blog, notice: "Blog was successfully published."
-    else
-      redirect_to @blog, alert: "Blog is already published."
-    end
-  end
-
-  def unpublish
-    if @blog.published?
-      @blog.draft!
-      redirect_to @blog, notice: "Blog was successfully unpublished."
-    else
-        redirect_to @blog, alert: "Blog is already unpublished."
-    end
-end
-
   def edit
   end
 
@@ -65,6 +45,24 @@ end
   def destroy
     @blog.destroy
     redirect_to blogs_path, notice: "Blog was successfully destroyed."
+  end
+
+  def publish
+    if @blog.draft?
+      @blog.published!
+      redirect_to @blog, notice: "Blog was successfully published."
+    else
+      redirect_to @blog, alert: "Blog is already published."
+    end
+  end
+
+  def unpublish
+    if @blog.published?
+      @blog.draft!
+      redirect_to @blog, notice: "Blog was successfully unpublished."
+    else
+      redirect_to @blog, alert: "Blog is already unpublished."
+    end
   end
 
   def my_blogs
@@ -82,7 +80,7 @@ end
   end
 
   def authorize_user
-    unless current_user == @blog.user || current_user.has_role?(:admin)
+    unless current_user == @blog.user || current_user.admin?
       redirect_to blogs_path, alert: "You are not authorized to perform this action."
     end
   end
